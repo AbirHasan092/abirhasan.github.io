@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abir Hasan | Integrated Circuits &amp; Semiconductor Devices</title>
+<meta name="description" content="Abir Hasan, Ph.D. candidate in Electrical and Computer Engineering at the University of Virginia: analog/mixed-signal IC design, semiconductor devices and processing, and oscillator-based computing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfbf9;
+    --surface: #ffffff;
+    --text: #1d1f23;
+    --muted: #5b616b;
+    --line: #e3e4e0;
+    --accent: #1a3a8a;
+    --accent-soft: #e8edf9;
+    --chip: #f1f2ee;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121417; --surface: #1a1d21; --text: #e7e8ea; --muted: #a2a8b1;
+      --line: #2c3036; --accent: #8fb0ff; --accent-soft: #1f2a44; --chip: #23272d;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121417; --surface: #1a1d21; --text: #e7e8ea; --muted: #a2a8b1;
+    --line: #2c3036; --accent: #8fb0ff; --accent-soft: #1f2a44; --chip: #23272d;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.65 "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  h1, h2, h3 { font-family: "Source Serif 4", Georgia, serif; line-height: 1.25; }
+
+  /* Navigation */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 960px; margin: 0 auto; padding: 12px 16px;
+    display: flex; align-items: center; gap: 20px; overflow-x: auto;
+  }
+  .nav-inner .brand { font-family: "Source Serif 4", serif; font-weight: 700; color: var(--text); white-space: nowrap; }
+  .nav-inner a.link { color: var(--muted); font-size: 14px; white-space: nowrap; }
+  .nav-inner a.link:hover { color: var(--accent); text-decoration: none; }
+  .theme-btn {
+    margin-left: auto; border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+    border-radius: 6px; padding: 4px 10px; font: inherit; font-size: 13px; cursor: pointer;
+  }
+
+  main { max-width: 960px; margin: 0 auto; padding: 0 16px 64px; }
+  section { padding-top: 48px; scroll-margin-top: 56px; }
+  section > h2 {
+    font-size: 26px; margin: 0 0 18px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+  }
+
+  /* Hero */
+  .hero { padding-top: 56px; display: grid; grid-template-columns: 1fr; gap: 24px; }
+  .hero h1 { font-size: 44px; margin: 0; }
+  .tagline { color: var(--accent); font-weight: 600; margin: 6px 0 14px; }
+  .hero p.lead { font-size: 17px; margin: 0 0 18px; max-width: 760px; }
+  .meta { color: var(--muted); font-size: 15px; margin-bottom: 18px; }
+  .buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-block; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500;
+    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  :root[data-theme="dark"] .btn.primary { color: #10131a; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #10131a; } }
+  .btn:hover { text-decoration: none; border-color: var(--accent); }
+
+  /* Research cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px;
+  }
+  .card h3 { margin: 0 0 4px; font-size: 19px; }
+  .card .sponsor { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+  .card p { margin: 0; font-size: 15px; }
+
+  /* Highlights */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 22px; }
+  .stat { background: var(--accent-soft); border-radius: 10px; padding: 14px 16px; }
+  .stat b { display: block; font-family: "Source Serif 4", serif; font-size: 22px; color: var(--accent); }
+  .stat span { font-size: 13px; color: var(--muted); }
+
+  /* Timeline entries */
+  .entry { display: grid; grid-template-columns: 1fr auto; column-gap: 16px; margin-bottom: 22px; }
+  .entry h3 { margin: 0; font-size: 19px; }
+  .entry .where { color: var(--muted); font-style: italic; font-size: 15px; }
+  .entry .when { color: var(--muted); font-size: 14px; text-align: right; white-space: nowrap; }
+  .entry .body { grid-column: 1 / -1; }
+  .entry h4 { margin: 14px 0 4px; font-size: 15px; font-weight: 600; color: var(--accent); }
+  ul { margin: 6px 0 0; padding-left: 20px; }
+  li { margin-bottom: 5px; }
+  li ul { margin-top: 4px; list-style: "– "; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .skill-group h3 { font-family: "Inter", sans-serif; font-size: 14px; font-weight: 600; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { background: var(--chip); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: 13px; }
+
+  /* Publications */
+  .pubs { list-style: none; padding: 0; margin: 0; }
+  .pubs li { padding: 14px 0; border-bottom: 1px solid var(--line); margin: 0; }
+  .pubs li:last-child { border-bottom: 0; }
+  .pubs .title { font-family: "Source Serif 4", serif; font-size: 17px; font-weight: 600; display: block; }
+  .pubs .authors { font-size: 14px; color: var(--muted); display: block; }
+  .pubs .venue { font-size: 14px; display: block; }
+  .tag { display: inline-block; font-size: 12px; background: var(--accent-soft); color: var(--accent); border-radius: 4px; padding: 1px 7px; margin-left: 6px; }
+
+  footer { max-width: 960px; margin: 0 auto; padding: 24px 16px 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 34px; }
+    .entry { grid-template-columns: 1fr; }
+    .entry .when { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="brand">Abir Hasan</span>
+    <a class="link" href="#about">About</a>
+    <a class="link" href="#research">Research</a>
+    <a class="link" href="#experience">Experience</a>
+    <a class="link" href="#skills">Skills</a>
+    <a class="link" href="#publications">Publications</a>
+    <a class="link" href="#education">Education</a>
+    <a class="link" href="#contact">Contact</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle color theme">Theme</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="hero">
+    <div>
+      <h1>Abir Hasan</h1>
+      <div class="tagline">Integrated circuit design &nbsp;|&nbsp; Semiconductor devices &nbsp;|&nbsp; Process technology</div>
+      <div class="meta">Ph.D. Candidate, Electrical and Computer Engineering, University of Virginia &middot; Charlottesville, VA &middot; Expected graduation May 2027</div>
+      <p class="lead">
+        I am a Ph.D. candidate advised by Prof. Nikhil Shukla, working at the intersection of circuits, devices, and
+        nonlinear dynamics. My work spans analog/mixed-signal IC design through <b>tapeout in TSMC 65&nbsp;nm</b>,
+        nanofabrication and electrical characterization of 2D-material interconnects, device modeling of magnetic
+        tunnel junctions, and theoretical models for oscillator-based and probabilistic computing hardware.
+      </p>
+      <p class="lead">
+        I am seeking full-time industry roles starting mid-2027 in analog/mixed-signal and digital circuit design,
+        semiconductor device characterization and modeling, and process technology.
+      </p>
+      <div class="buttons">
+        <a class="btn primary" href="Abir_Hasan_CV.pdf" target="_blank" rel="noopener">Download CV</a>
+        <a class="btn" href="mailto:guf3kk@virginia.edu">Email</a>
+        <a class="btn" href="https://scholar.google.com/citations?hl=en&amp;user=1DB2g38AAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+        <a class="btn" href="https://www.linkedin.com/in/abir-hasan-00264b17a/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>TSMC 65&nbsp;nm</b><span>Mixed-signal IC taped out and validated in silicon</span></div>
+        <div class="stat"><b>30&nbsp;nm</b><span>Wide 2D-material nanowires fabricated by E-beam lithography</span></div>
+        <div class="stat"><b>136 pairs</b><span>Programmable oscillator couplings on chip</span></div>
+        <div class="stat"><b>5 papers &amp; talks</b><span>PRL / PR Applied / APL submissions and AVS talk</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RESEARCH ===== -->
+  <section id="research">
+    <h2>Research Projects</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Synchronized oscillations for computing</h3>
+        <div class="sponsor">Department of War: MURI &middot; Aug. 2024 – Present</div>
+        <p>Implemented and analyzed Oscillator Ising Machines (OIM) in a CMOS integrated circuit platform for experimental demonstration, and demonstrated maximum-likelihood MIMO detection using coupled-oscillator computation.</p>
+      </div>
+      <div class="card">
+        <h3>Probabilistic-bit engines</h3>
+        <div class="sponsor">National Science Foundation (NSF) &middot; Nov. 2025 – Present</div>
+        <p>Designed a generalized probabilistic computing scheme with noisy bistable-latch circuits as tunable multi-state sampling engines, and modeled MTJ-based probabilistic bits with stochastic LLG simulations.</p>
+      </div>
+      <div class="card">
+        <h3>Highly scaled 2D metallic materials as interconnects</h3>
+        <div class="sponsor">Intel &middot; Sep. 2022 – Aug. 2024</div>
+        <p>Fabricated 30&nbsp;nm-wide nanowires on epitaxially grown 2D materials and characterized resistivity, temperature coefficient of resistivity (TCR better than copper), and electromigration lifetime as alternatives to Cu back-end-of-line interconnects.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE ===== -->
+  <section id="experience">
+    <h2>Experience</h2>
+
+    <div class="entry">
+      <div>
+        <h3>Graduate Research Assistant</h3>
+        <div class="where">University of Virginia, Department of Electrical and Computer Engineering</div>
+      </div>
+      <div class="when">Aug. 2022 – Present<br>Charlottesville, VA</div>
+      <div class="body">
+        <h4>Circuit Design</h4>
+        <ul>
+          <li>Completed tapeout of a functional mixed-signal IC in TSMC 65&nbsp;nm technology (1.5&nbsp;mm², 1.2&nbsp;V supply, 17 coupled oscillators), from circuit-block design and verification to full-custom layout, Calibre DRC/LVS/PEX sign-off, and post-layout tuning against extracted parasitics.</li>
+          <li>Designed and verified analog/mixed-signal blocks in Spectre and HSPICE with Verilog-A testbenches, process-corner and Monte Carlo analysis:
+            <ul>
+              <li>Designed a bandgap reference with multilevel bias generation and a Schmitt trigger buffer with tunable hysteresis.</li>
+              <li>Tuned a differential ring oscillator to 30&nbsp;MHz; silicon frequency measured close to simulation.</li>
+              <li>Designed Pass-Transistor Logic programmable coupling for all 136 oscillator pairs, with 7 signed coupling-strength levels set by digital control bits.</li>
+            </ul>
+          </li>
+          <li>Completed the full-chip layout, including placement of the TSMC-provided pad ring and ESD IP.</li>
+          <li>Configured an SPI interface with five 136-bit registers using digital synthesis and automation tools to meet custom connectivity and I/O protocol requirements.</li>
+          <li>Carried out post-silicon bring-up, testing, debugging, and characterization on custom PCB test boards to validate the fabricated chip against simulation.</li>
+          <li>Built a theoretical model for oscillator-based computing hardware using nonlinear dynamical analysis (phase-response, bifurcation, and stochastic-differential-equation methods), linking device noise, harmonic content, and coupling strength to circuit accuracy and guiding design choices that improve hardware performance.</li>
+        </ul>
+
+        <h4>Device Characterization and Modeling</h4>
+        <ul>
+          <li>Characterized fabricated devices on a probe station, measuring resistivity versus device width and across temperature and extracting a temperature coefficient of resistivity (TCR) better than copper.</li>
+          <li>Evaluated interconnect reliability through electromigration lifetime under accelerated stress and contact resistivity measurements, with data analysis in MATLAB and Python.</li>
+          <li>Modeled magnetic tunnel junction (MTJ) probabilistic bits with stochastic LLG (sLLG) simulations, including spin-orbit torque, and extracted switching-probability characteristics.</li>
+        </ul>
+
+        <h4>Process Technology</h4>
+        <ul>
+          <li>Fabricated 30&nbsp;nm-wide nanowires on epitaxially grown 2D materials using a 30&nbsp;kV E-beam lithography system (RAITH150 Two) to benchmark against Cu BEOL baselines.</li>
+          <li>Integrated the full device process flow (resist coating, E-beam exposure and development, metal deposition by E-beam evaporation or sputtering, lift-off, multi-layer alignment) and ran process-parameter sweeps to optimize it, checking results with SEM, AFM, profilometry, ellipsometry, and EDS.</li>
+          <li>Developed chlorine-based ICP-RIE dry-etch recipes (Oxford PlasmaPro 100 Cobra) for nanoscale pattern transfer; also performed wet processing (resist development, RCA cleaning, wet etches) and atomic layer deposition.</li>
+        </ul>
+
+        <h4>Coursework Projects</h4>
+        <ul>
+          <li>Designed an amplifier targeting 5000 gain, 2&nbsp;GHz bandwidth, 400&nbsp;mV<sub>pp</sub> output swing, 30&nbsp;pA/√Hz noise, and a 100&nbsp;mW power budget (graduate analog circuit design capstone).</li>
+          <li>Analyzed the speed, power, and energy efficiency of current-race-based ternary content-addressable memory (TCAM) circuits in HSPICE.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div>
+        <h3>Lecturer, Electrical and Electronic Engineering</h3>
+        <div class="where">University of Scholars</div>
+      </div>
+      <div class="when">Nov. 2021 – June 2022<br>Dhaka, Bangladesh</div>
+      <div class="body">
+        <ul>
+          <li>Delivered lectures on VLSI circuit design and developed assessment rubrics.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills">
+    <h2>Technical Skills</h2>
+    <div class="skills">
+      <div class="skill-group">
+        <h3>Circuit Design &amp; Simulation</h3>
+        <div class="chips">
+          <span class="chip">Bandgap reference</span><span class="chip">Ring oscillators</span><span class="chip">Coupled-oscillator arrays</span>
+          <span class="chip">Schmitt trigger buffers</span><span class="chip">Differential amplifiers</span><span class="chip">Current mirrors</span>
+          <span class="chip">Pass-Transistor Logic</span><span class="chip">SPI configuration</span><span class="chip">Monte Carlo analysis</span>
+          <span class="chip">Process-corner verification</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>IC Implementation &amp; Validation</h3>
+        <div class="chips">
+          <span class="chip">Full-custom layout</span><span class="chip">DRC/LVS/PEX sign-off</span><span class="chip">Post-layout extraction &amp; tuning</span>
+          <span class="chip">IO pads &amp; ESD placement</span><span class="chip">Test-bench development</span><span class="chip">PCB design (KiCad)</span>
+          <span class="chip">Post-silicon testing &amp; debugging</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>EDA &amp; Programming</h3>
+        <div class="chips">
+          <span class="chip">Cadence Virtuoso</span><span class="chip">Spectre</span><span class="chip">ADE Explorer</span><span class="chip">HSPICE</span>
+          <span class="chip">Calibre</span><span class="chip">Cadence Innovus</span><span class="chip">Verilog</span><span class="chip">Verilog-A</span>
+          <span class="chip">MATLAB</span><span class="chip">Python</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Device &amp; Reliability Characterization</h3>
+        <div class="chips">
+          <span class="chip">Probe-station DC I-V</span><span class="chip">Resistivity vs. width &amp; temperature</span><span class="chip">TCR</span>
+          <span class="chip">Electromigration lifetime</span><span class="chip">Contact resistivity</span><span class="chip">MTJ / sLLG modeling</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Process Technology</h3>
+        <div class="chips">
+          <span class="chip">30&nbsp;kV E-beam lithography</span><span class="chip">Optical lithography</span><span class="chip">Mask design</span>
+          <span class="chip">Resist development</span><span class="chip">Lift-off</span><span class="chip">ICP-RIE recipe development</span>
+          <span class="chip">Wet etching</span><span class="chip">RCA cleaning</span><span class="chip">E-beam evaporation</span>
+          <span class="chip">Sputtering</span><span class="chip">Atomic layer deposition</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Metrology</h3>
+        <div class="chips">
+          <span class="chip">SEM</span><span class="chip">AFM</span><span class="chip">Optical &amp; stylus profilometry</span>
+          <span class="chip">Ellipsometry</span><span class="chip">EDS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PUBLICATIONS ===== -->
+  <section id="publications">
+    <h2>Publications &amp; Talks</h2>
+    <ul class="pubs">
+      <li>
+        <a class="title" href="https://arxiv.org/abs/2605.17243" target="_blank" rel="noopener">Breakdown of Gradient-Flow Dynamics in Oscillator Ising Machines from Harmonic Misalignment</a>
+        <span class="authors"><b>A. Hasan</b>, E.M. Ekanayake, K. Lee, K. Camsari, and N. Shukla</span>
+        <span class="venue">arXiv:2605.17243 (2026) <span class="tag">Under review: Physical Review Letters</span></span>
+      </li>
+      <li>
+        <a class="title" href="https://arxiv.org/abs/2603.06843" target="_blank" rel="noopener">How Physical Dynamics Shape the Properties of Ising Machines: Evaluating Oscillators vs. Bistable Latches as Ising Spins</a>
+        <span class="authors"><b>A. Hasan</b> and N. Shukla</span>
+        <span class="venue">arXiv:2603.06843 (2026) <span class="tag">Under review: Physical Review Applied</span></span>
+      </li>
+      <li>
+        <a class="title" href="https://arxiv.org/abs/2602.04014" target="_blank" rel="noopener">At the top of the mountain, the world can look Boltzmann-like: Sampling dynamics of noisy double-well systems</a>
+        <span class="authors"><b>A. Hasan</b> and N. Shukla</span>
+        <span class="venue">arXiv:2602.04014 (2026) <span class="tag">Under review: Physical Review Applied</span></span>
+      </li>
+      <li>
+        <span class="title">Thermal transport in γ-InSe: Bulk single crystals and thin flakes</span>
+        <span class="authors">F.F. Tonni, M. Maliat, S. Bati, M.S. Akhanda, H. Chandra, E.A. Scott, <b>A. Hasan</b>, S. Krylyuk, N. Shukla, C. Constantin, and P.E. Hopkins</span>
+        <span class="venue"><i>Applied Physics Letters</i> 128(18) (2026)</span>
+      </li>
+      <li>
+        <span class="title">2D materials as interconnects</span>
+        <span class="authors">Conference talk</span>
+        <span class="venue">AVS 69th International Symposium and Exhibition, Portland, OR (Nov. 2023)</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== EDUCATION ===== -->
+  <section id="education">
+    <h2>Education</h2>
+    <div class="entry">
+      <div>
+        <h3>University of Virginia</h3>
+        <div class="where">Ph.D. in Electrical and Computer Engineering · Advisor: Prof. Nikhil Shukla</div>
+      </div>
+      <div class="when">Aug. 2022 – May 2027 (Expected)<br>Charlottesville, VA</div>
+      <div class="body">
+        <ul><li>Graduate coursework: solid state devices, semiconductor characterization, analog circuit design, control systems, hardware computing, and machine learning.</li></ul>
+      </div>
+    </div>
+    <div class="entry">
+      <div>
+        <h3>Islamic University of Technology</h3>
+        <div class="where">B.Sc. in Electrical and Electronic Engineering</div>
+      </div>
+      <div class="when">Jan. 2017 – Feb. 2021<br>Gazipur, Bangladesh</div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>I welcome conversations about circuit design, semiconductor device, and process technology roles.</p>
+    <div class="buttons">
+      <a class="btn primary" href="mailto:guf3kk@virginia.edu">guf3kk@virginia.edu</a>
+      <a class="btn" href="https://www.linkedin.com/in/abir-hasan-00264b17a/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://scholar.google.com/citations?hl=en&amp;user=1DB2g38AAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>© <span id="yr">2026</span> Abir Hasan · Charlottesville, VA</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('themeBtn');
+    try { var saved = localStorage.getItem('theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  })();
+</script>
+</body>
+</html>
